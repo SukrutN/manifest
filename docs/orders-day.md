@@ -131,10 +131,14 @@ Subject `ledger.merrow.204.closed`.
 | Cartons seated | `quay putaway --json` / workbench `:8091` | runs today |
 | The person's walk | northspan's planner + standards, locked by its tests | runs today |
 | The robots' plan | `hearth plan` / `hearth windows` | runs today |
-| The carton rides | `linehost -lane fluxline` → the line's Modbus host block | runs today |
-| **The whole day, end to end** | one harness driving the five against one order | **designed here — the next increment** |
+| The carton rides | fluxline's `hostblock.py`, the scan-exact host-block model | runs today — the same model the seeded bench drives; the live linehost-twin round trip with a controller in the loop is the next increment |
+| **The whole day, end to end** | `harness/run-day.ps1` in this repository | **runs today** |
 
-The last row is the honest one: each hop is a real system's real
-interface, proven by that repo's own tests. What does not exist yet is
-the harness that runs all five in sequence against a single order and
-replays the ledger. The subjects and payloads above are its contract.
+The last row is no longer the honest one: the harness exists and runs —
+`harness/run-day.ps1` drives the five against one order and replays the
+ledger, exit code 0 when every claim was on its lane. What remains the
+next increment is the controller in the line's loop: the twin and
+linehost pair live over Modbus to the armed command, and closing that
+round trip (an OpenPLC runtime, or a scan bridge backed by the same
+`hostblock.py`) would make the verdicts arrive over the wire instead of
+from the model.

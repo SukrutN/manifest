@@ -57,8 +57,9 @@ not asserted here.
 
 [One order's day](docs/orders-day.md) — the exact lanes, subjects,
 messages, and the real entrypoint of each system, from the order's arrival
-to the closed ledger. Every hop is a real interface in a real repo; the
-end-to-end harness that runs them against one order is the next increment.
+to the closed ledger. The harness runs it: `harness/run-day.ps1` drives
+the five against one order and replays the ledger; exit 0 means every
+claim was on its lane and every figure held.
 
 ## The real world
 

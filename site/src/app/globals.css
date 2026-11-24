@@ -193,7 +193,7 @@ a {
 
 .hero .eyebrow {
   margin-bottom: clamp(26px, 4vh, 40px);
-  animation: fadeup 900ms var(--ease) 120ms both;
+  animation: fadeup 900ms var(--ease) 2800ms both;
 }
 
 .hero h1 {
@@ -218,11 +218,11 @@ a {
 }
 
 .hero h1 .mask:nth-child(1) .mask__inner {
-  animation-delay: 220ms;
+  animation-delay: 2600ms;
 }
 
 .hero h1 .mask:nth-child(2) .mask__inner {
-  animation-delay: 360ms;
+  animation-delay: 2750ms;
 }
 
 .hero h1 .stamp {
@@ -233,7 +233,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  animation: fadeup 900ms var(--ease) 540ms both;
+  animation: fadeup 900ms var(--ease) 2900ms both;
 }
 
 .hero__side p {
@@ -247,7 +247,7 @@ a {
   display: flex;
   gap: 14px;
   margin-top: clamp(36px, 6vh, 56px);
-  animation: fadeup 900ms var(--ease) 660ms both;
+  animation: fadeup 900ms var(--ease) 3050ms both;
 }
 
 .btn {

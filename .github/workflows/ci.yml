@@ -1,0 +1,36 @@
+# One repo, one CI: the site's figure locks, lint, and build.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  site:
+    name: lint + lock + build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install (locked)
+        run: npm ci
+
+      - name: Figure lock
+        run: npm run test
+
+      - name: Lint (zero errors)
+        run: npm run lint
+
+      - name: Build (production, TypeScript included)
+        run: npm run build

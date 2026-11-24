@@ -1,5 +1,7 @@
 # Manifest
 
+Live site: https://sukrutn.github.io/manifest/
+
 Five systems, one warehouse stack. This repository is the architecture that
 connects them, the walk of one order through all of them, and the map of the
 real-world interfaces each layer would meet in a real building.

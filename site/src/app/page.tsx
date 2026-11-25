@@ -1,8 +1,13 @@
+import { BarFill } from "@/components/bar-fill";
+import { Cursor } from "@/components/cursor";
 import { DayReplay } from "@/components/day-replay";
+import { IntroWords } from "@/components/intro-words";
 import { Preloader } from "@/components/preloader";
 import { Reveal } from "@/components/reveal";
+import { SiteHead } from "@/components/site-head";
 import {
   CHAPTERS,
+  CLOSING,
   ORDER,
   PLAN,
   SEAMS,
@@ -12,15 +17,73 @@ import {
   WALK,
 } from "@/lib/day";
 
-const BAND_TEXT =
+const MARQUEE_TEXT =
   "MR-204 · MERROW CHANDLERY · COUNTER REFILL, SHIP FRIDAY · FIVE LOCATIONS · TWO CARTONS · ONE VETO · ONE HONOR · ONE LEDGER ";
 
-function Band() {
+function Marquee() {
   return (
-    <div className="band" aria-hidden="true">
-      <div className="band__track">
-        <span>{BAND_TEXT}</span>
-        <span>{BAND_TEXT}</span>
+    <div aria-hidden="true">
+      <div className="wrap">
+        <div className="marquee">
+          <div className="marquee__track">
+            <span>{MARQUEE_TEXT}</span>
+            <span>{MARQUEE_TEXT}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StackCard({
+  system,
+  i,
+}: {
+  system: (typeof SYSTEMS)[number];
+  i: number;
+}) {
+  const light = i % 2 === 1;
+  return (
+    <div className={`stack-card${light ? " stack-card--light" : " stack-card--dark"}`}>
+      <div className="stack-card__inner">
+        <Reveal className="stack-card__top">
+          <p className="stack-card__num">{system.index}</p>
+          <p className="stack-card__layer">{system.layer}</p>
+        </Reveal>
+        <div className="stack-card__mid">
+          <Reveal delay={40}>
+            <h3 className="stack-card__name">{system.name}</h3>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="stack-card__desc">{system.line}</p>
+          </Reveal>
+          <Reveal delay={200}>
+            <div className="stack-card__links">
+              <a
+                className={`btn btn--sm${light ? " btn--dark" : ""}`}
+                href={system.repo}
+                target="_blank"
+                rel="noreferrer"
+              >
+                the repo <span className="btn__arrow" aria-hidden="true">↗</span>
+              </a>
+              <a
+                className={`btn btn--sm${light ? " btn--dark" : ""}`}
+                href={system.demo}
+                target="_blank"
+                rel="noreferrer"
+              >
+                the demo <span className="btn__arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </Reveal>
+        </div>
+        <Reveal className="stack-card__footing" delay={260}>
+          <div className="bar">
+            <BarFill />
+          </div>
+          <span className="stack-card__count">{system.index} / 05</span>
+        </Reveal>
       </div>
     </div>
   );
@@ -30,123 +93,64 @@ export default function Page() {
   return (
     <>
       <Preloader />
-
-      <header className="site-head">
-        <div className="wrap">
-          <a className="wordmark" href="#top">
-            MANIFEST<em>*</em>
-          </a>
-          <nav className="site-nav">
-            <a className="nav-link" href="#stack">
-              the stack
-            </a>
-            <a className="nav-link" href="#day">
-              the day
-            </a>
-            <a className="nav-link" href="#harness">
-              the harness
-            </a>
-            <a
-              href="https://github.com/SukrutN/manifest"
-              target="_blank"
-              rel="noreferrer"
-            >
-              github ↗
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteHead />
+      <Cursor />
 
       <main id="top">
         <section className="hero">
           <div className="wrap">
-            <p className="eyebrow">
-              five systems <span className="sep">·</span> one order{" "}
-              <span className="sep">·</span> one ledger
-            </p>
-            <div className="hero__grid">
-              <div>
-                <h1>
-                  <span className="mask">
-                    <span className="mask__inner">one order</span>
-                  </span>
-                  <span className="mask">
-                    <span className="mask__inner">
-                      walks the <span className="stamp">stack.</span>
-                    </span>
-                  </span>
-                </h1>
-              </div>
-              <div className="hero__side">
-                <p>
-                  The architecture that connects five material-handling
-                  systems — and the harness that runs a single order through
-                  all of them, from the lane it lands on to the verdicts the
-                  floor journals back.
-                </p>
-                <p className="eyebrow">
-                  every figure on this page <span className="sep">·</span>{" "}
-                  from a real run
-                </p>
-              </div>
-            </div>
-            <div className="hero__ctas">
-              <a className="btn btn--solid" href="#day">
-                run the day <span aria-hidden="true">↓</span>
-              </a>
-              <a className="btn btn--ghost" href="#stack">
-                the stack
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <Band />
-
-        <section className="section" id="stack">
-          <div className="wrap">
-            <div className="section__head">
-              <h2>five systems, one discipline.</h2>
-              <p className="eyebrow">01 — the stack</p>
-            </div>
-            <div>
-              {SYSTEMS.map((s, i) => (
-                <Reveal key={s.name} delay={i * 60}>
-                  <div className="stack-row">
-                    <p className="stack-row__index">{s.index}</p>
-                    <div>
-                      <p className="stack-row__name">{s.name}</p>
-                      <span className="stack-row__layer">{s.layer}</span>
-                    </div>
-                    <p className="stack-row__desc">{s.line}</p>
-                    <div className="stack-row__links">
-                      <a href={s.repo} target="_blank" rel="noreferrer">
-                        repo ↗
-                      </a>
-                      <a href={s.demo} target="_blank" rel="noreferrer">
-                        demo ↗
-                      </a>
-                    </div>
-                  </div>
-                </Reveal>
+            <h1 className="hero__mark hero-anim hero-anim--4">MANIFEST</h1>
+            <div className="hero__words hero-anim hero-anim--5">
+              {SYSTEMS.map((s) => (
+                <span key={s.name}>{s.name}</span>
               ))}
             </div>
           </div>
         </section>
 
-        <Band />
+        <section className="intro">
+          <div className="wrap--half">
+            <IntroWords text="Manifest gives you one order's whole day through five systems: the lane it lands on, the seat each carton takes, the walk it is priced against, the plan that moves the fleet, and the verdicts the floor journals back. Every figure comes from a real run, and the harness that produced it ships with the repo." />
+            <div className="text-center">
+              <a className="btn btn--mt" href="#day">
+                run the day <span className="btn__arrow" aria-hidden="true">↓</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="section section--flush-end" id="stack">
+          <div className="wrap">
+            <div className="section__head">
+              <p className="section__intro">
+                Five systems, in the order an order meets them. Each card
+                opens the system&apos;s own repo and demo.
+              </p>
+              <h2 className="titolo-sezione">The stack</h2>
+            </div>
+          </div>
+          <div className="stack-cards">
+            {SYSTEMS.map((s, i) => (
+              <StackCard key={s.name} system={s} i={i} />
+            ))}
+          </div>
+        </section>
 
         <section className="section" id="day">
           <div className="wrap">
             <div className="section__head">
-              <h2>mr-204 walks the day.</h2>
-              <p className="eyebrow">02 — one order&apos;s day</p>
+              <p className="section__intro">
+                One real order, MR-204 from Merrow Chandlery, walks the
+                stack in six steps. Every card below is that system&apos;s
+                own output from the run, not a mockup.
+              </p>
+              <h2 className="titolo-sezione">The day</h2>
             </div>
             <div className="day__grid">
               <div className="day__rail">
                 {CHAPTERS.map((c) => (
                   <p key={c.n}>
-                    <b>{c.n}</b>
+                    <span className="rail-dot" aria-hidden="true">{c.n}</span>
                     {c.title}
                   </p>
                 ))}
@@ -159,9 +163,9 @@ export default function Page() {
                       <h3>{CHAPTERS[0].title}</h3>
                     </div>
                     <p className="chapter__note">{CHAPTERS[0].note}</p>
-                    <div className="card">
-                      <p className="card__subject">
-                        lane orders <em>·</em> {ORDER.subject}
+                    <div className="data-card">
+                      <p className="data-card__subject">
+                        lane orders · {ORDER.subject}
                       </p>
                       <pre>{ORDER.payload}</pre>
                     </div>
@@ -175,9 +179,9 @@ export default function Page() {
                       <h3>{CHAPTERS[1].title}</h3>
                     </div>
                     <p className="chapter__note">{CHAPTERS[1].note}</p>
-                    <div className="card">
-                      <p className="card__subject">
-                        lane slotting <em>·</em> {SEATS.subject}
+                    <div className="data-card">
+                      <p className="data-card__subject">
+                        lane slotting · {SEATS.subject}
                       </p>
                       <pre>{SEATS.digest}</pre>
                     </div>
@@ -191,9 +195,9 @@ export default function Page() {
                       <h3>{CHAPTERS[2].title}</h3>
                     </div>
                     <p className="chapter__note">{CHAPTERS[2].note}</p>
-                    <div className="card">
-                      <p className="card__subject">
-                        lane picking <em>·</em> {WALK.subject}
+                    <div className="data-card">
+                      <p className="data-card__subject">
+                        lane picking · {WALK.subject}
                       </p>
                       <pre>{WALK.text}</pre>
                     </div>
@@ -207,9 +211,9 @@ export default function Page() {
                       <h3>{CHAPTERS[3].title}</h3>
                     </div>
                     <p className="chapter__note">{CHAPTERS[3].note}</p>
-                    <div className="card">
-                      <p className="card__subject">
-                        lane fleet <em>·</em> {PLAN.subject}
+                    <div className="data-card">
+                      <p className="data-card__subject">
+                        lane fleet · {PLAN.subject}
                       </p>
                       <pre>{PLAN.head}</pre>
                     </div>
@@ -228,19 +232,24 @@ export default function Page() {
                         <div className="verdict" key={v.id}>
                           <p className="verdict__id">
                             {v.id} <span aria-hidden="true">→</span>{" "}
-                            {v.state === "vetoed" ? "asked L02" : "per law"}
+                            {v.state === "vetoed"
+                              ? "asked for lane 2"
+                              : "released under law"}
                           </p>
                           <span
                             className={`chip chip--${v.state === "vetoed" ? "veto" : "ok"}`}
                           >
-                            {v.state} · gate {v.gate}
+                            {v.state === "vetoed"
+                              ? `vetoed · rides to lane ${v.gate}`
+                              : `accepted · lane ${v.gate}`}
                           </span>
                           <p className="verdict__line">
                             class {v.class} measured at the load cell
                             <br />
-                            receipt journaled before the lane ack
+                            receipt journaled before the lane acknowledges
                             <br />
-                            latency {v.latency_ms.toFixed(1)} ms
+                            answered in {(v.latency_ms / 1000).toFixed(1)}{" "}
+                            seconds
                           </p>
                         </div>
                       ))}
@@ -255,10 +264,7 @@ export default function Page() {
                       <h3>{CHAPTERS[5].title}</h3>
                     </div>
                     <p className="chapter__note">{CHAPTERS[5].note}</p>
-                    <p className="closing-line">
-                      THE DAY CLOSED CLEAN: every claim on the lanes, every
-                      verdict journaled, nothing invented, nothing lost. exit 0
-                    </p>
+                    <p className="closing-line">{CLOSING}</p>
                   </div>
                 </Reveal>
               </div>
@@ -270,25 +276,32 @@ export default function Page() {
           </div>
         </section>
 
-        <Band />
+        <Marquee />
 
         <section className="section" id="seams">
           <div className="wrap">
             <div className="section__head">
-              <h2>three rules hold it together.</h2>
-              <p className="eyebrow">03 — the seams</p>
+              <p className="section__intro">
+                Three rules hold the stack together, and each is proven
+                inside a repo rather than asserted here.
+              </p>
+              <h2 className="titolo-sezione">The seams</h2>
             </div>
             <div className="seams">
               {SEAMS.map((s, i) => (
-                <Reveal key={s.n} delay={i * 80}>
-                  <div className="seam">
-                    <b>{s.n}</b>
-                    <h3>{s.title}</h3>
-                    <p>{s.body}</p>
-                    <a href={s.proof} target="_blank" rel="noreferrer">
-                      proven in the repo ↗
-                    </a>
-                  </div>
+                <Reveal key={s.n} delay={i * 80} className="seam">
+                  <span className="seam__dot" aria-hidden="true" />
+                  <h3>{s.title}</h3>
+                  <p>{s.body}</p>
+                  <a
+                    className="btn btn--sm"
+                    href={s.proof}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    proven in the repo{" "}
+                    <span className="btn__arrow" aria-hidden="true">↗</span>
+                  </a>
                 </Reveal>
               ))}
             </div>
@@ -298,8 +311,12 @@ export default function Page() {
         <section className="section" id="harness">
           <div className="wrap">
             <div className="section__head">
-              <h2>run it yourself.</h2>
-              <p className="eyebrow">04 — the harness</p>
+              <p className="section__intro">
+                Two commands run the whole day on your own machine: build
+                the five systems once, then run the day as many times as
+                you like.
+              </p>
+              <h2 className="titolo-sezione">The harness</h2>
             </div>
             <Reveal>
               <div className="codecard">
@@ -334,71 +351,56 @@ export default function Page() {
                 </pre>
               </div>
               <p className="harness__note">
-                every figure on this page comes from that run — the locks in
-                src/lib/day.test.ts hold the site to it
+                every figure on this page comes from that run, and the
+                locks in src/lib/day.test.ts hold the site to it
               </p>
             </Reveal>
           </div>
         </section>
+      </main>
 
-        <section className="cta">
-          <div className="wrap">
-            <h2>one repo, the whole day.</h2>
+      <footer className="footer-card">
+        <div className="footer__top">
+          <Reveal className="footer__top__text">
+            <h3>Run the day on your floor.</h3>
             <p>
-              The architecture, the order&apos;s walkthrough, the
-              real-world interfaces each layer meets, and the harness that
-              runs it — all in one repository.
+              Clone the repo and the harness comes with it: the same order
+              you just read runs on your own machine.
             </p>
+          </Reveal>
+          <Reveal className="footer__top__cta" delay={80}>
             <a
-              className="btn btn--solid"
+              className="btn btn--solid-dark"
               href="https://github.com/SukrutN/manifest"
               target="_blank"
               rel="noreferrer"
             >
-              clone the manifest <span aria-hidden="true">↗</span>
+              clone the repo{" "}
+              <span className="btn__arrow" aria-hidden="true">↗</span>
             </a>
-          </div>
-        </section>
-      </main>
-
-      <footer className="site-foot">
-        <div className="wrap">
-          <p className="foot-mark">MANIFEST</p>
-          <div className="foot-grid">
-            <div>
-              <h4>the systems</h4>
-              {SYSTEMS.map((s) => (
-                <a key={s.name} href={s.repo} target="_blank" rel="noreferrer">
-                  {s.name} · {s.layer}
-                </a>
-              ))}
-            </div>
-            <div>
-              <h4>the demos</h4>
-              {SYSTEMS.map((s) => (
-                <a key={s.name} href={s.demo} target="_blank" rel="noreferrer">
-                  sukrutn.github.io/{s.name}
-                </a>
-              ))}
-            </div>
-            <div>
-              <h4>the repo</h4>
-              <a
-                href="https://github.com/SukrutN/manifest"
-                target="_blank"
-                rel="noreferrer"
-              >
-                github.com/SukrutN/manifest
-              </a>
-              <p>the architecture, the day, the harness</p>
-              <p>figures from a real harness run</p>
-            </div>
-          </div>
-          <div className="foot-legal">
-            <span>© 2026 Sukrut Nadigotti — MIT</span>
-            <span>paper · ink · one stamp</span>
-          </div>
+            <a
+              className="btn btn--dark"
+              href="https://github.com/SukrutN/manifest/blob/main/docs/orders-day.md"
+              target="_blank"
+              rel="noreferrer"
+            >
+              the walkthrough{" "}
+              <span className="btn__arrow" aria-hidden="true">↗</span>
+            </a>
+          </Reveal>
         </div>
+        <div className="footer__bottom">
+          <span>© 2026 Sukrut Nadigotti · MIT</span>
+          <a
+            href="https://github.com/SukrutN/manifest"
+            target="_blank"
+            rel="noreferrer"
+          >
+            github.com/SukrutN/manifest
+          </a>
+          <span>five systems · one order · one ledger</span>
+        </div>
+        <p className="foot-mark" aria-hidden="true">MANIFEST</p>
       </footer>
     </>
   );

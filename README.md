@@ -63,6 +63,11 @@ to the closed ledger. The harness runs it: `harness/run-day.ps1` drives
 the five against one order and replays the ledger; exit 0 means every
 claim was on its lane and every figure held.
 
+## Design notes
+
+[What the live page lifts from its reference, and what it
+approximates](docs/design.md).
+
 ## The real world
 
 [The interfaces each layer meets](docs/integrations.md) — OPC UA,

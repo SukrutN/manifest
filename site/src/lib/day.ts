@@ -64,19 +64,16 @@ export const SEAMS = [
     n: "01",
     title: "The host can only request.",
     body: "fluxline's host command block carries release requests to the line's Modbus surface, and the routing law keeps the last word: a tall piece asked for lane 2 rides to lane 3 anyway. The floor decides; everything above it proposes.",
-    proof: "https://github.com/SukrutN/fluxline",
   },
   {
     n: "02",
-    title: "At-least-once, with the sweeper recognized.",
-    body: "switchyard's linehost journals every verdict before the lane ack, so a crash replays the work instead of losing the receipt. Nothing in the chain invents or loses a box.",
-    proof: "https://github.com/SukrutN/switchyard",
+    title: "A crash replays the work.",
+    body: "switchyard's linehost journals every verdict before the lane acknowledges, so a crash replays the work instead of losing the receipt. Nothing in the chain invents or loses a box.",
   },
   {
     n: "03",
-    title: "Figures are locked, not copied.",
-    body: "The engine prints its reading, a golden copy stores it, and the site's tests must replay it figure for figure. A change that moves a number in one place fails the build everywhere.",
-    proof: "https://github.com/SukrutN/manifest",
+    title: "All five must agree.",
+    body: "Each system journals its own claims as the order passes through, and the day only closes when every lane agrees. Nothing is invented on the way in, and nothing is lost on the way out.",
   },
 ];
 
@@ -205,31 +202,31 @@ export const CHAPTERS = [
   {
     n: "01",
     title: "The order lands",
-    note: "The order lands as 293 bytes on the journal, and a lane acknowledges only what is already on disk, so the order survives a crash.",
+    note: "An order arrives as one small message on the broker's journal, and the broker only acknowledges what is already on disk, so a crash loses nothing.",
   },
   {
     n: "02",
     title: "Cartons get seated",
-    note: "Both cartons get seats in one deterministic pass: velocity, affinity, and a random baseline, scored from 30,496 bytes of floor data.",
+    note: "The slotting engine seats every carton in one deterministic pass, scoring each location by how fast it moves and which goods belong beside it.",
   },
   {
     n: "03",
     title: "The walk gets priced",
-    note: "The planned walk is 110.0 m against the 150.8 m a full sweep would cost: 40.8 m shorter, about a quarter less walking for the picker.",
+    note: "The picking engine routes the walk at 110.0 m where a full sweep would cost 150.8 m, a quarter less walking for the picker.",
   },
   {
     n: "04",
     title: "The fleet gets planned",
-    note: "69 ticks of travel across the fleet, and nothing cheaper exists, proven in 23 search steps.",
+    note: "The fleet planner moves every robot as one joint plan: 69 ticks of travel with nothing cheaper in existence, proven in 23 search steps.",
   },
   {
     n: "05",
     title: "The line answers",
-    note: "One carton is vetoed and one honored, each receipt journaled before the lane acknowledges, so a crash replays the verdict instead of losing it.",
+    note: "The line keeps the last word. It measures each carton at the load cell, honors the ones the routing law allows, and vetoes the rest, each answer back in 1.6 seconds.",
   },
   {
     n: "06",
     title: "The ledger closes",
-    note: "The day closes across five lanes and eight rows; exit 0 means every claim was where it should be.",
+    note: "The day closes clean: every claim on its lane and every verdict journaled, nothing invented, nothing lost.",
   },
 ];

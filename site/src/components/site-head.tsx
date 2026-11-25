@@ -4,17 +4,17 @@ import { useEffect, useRef, useState } from "react";
 
 const MENU = [
   { label: "The stack", href: "#stack" },
-  { label: "The day", href: "#day" },
+  { label: "The flow", href: "#flow" },
   { label: "The seams", href: "#seams" },
-  { label: "The harness", href: "#harness" },
+  { label: "Run it yourself", href: "#harness" },
 ];
 
 /**
  * The fixed bar: the wordmark on the left, the one-line claim in the
  * middle, and the burger that opens the menu panel. The bar fades on
  * the way down and returns on the way up; the panel carries the four
- * anchors plus the repo, giant and uppercase, with the backdrop blur
- * the reference uses. Without JavaScript the anchors still work as
+ * section anchors plus github, giant and uppercase, with the backdrop
+ * blur the reference uses. Without JavaScript the anchors still work as
  * plain links, so nothing on the page is behind the menu.
  */
 export function SiteHead() {
@@ -72,7 +72,7 @@ export function SiteHead() {
             MANIFEST<em>*</em>
           </a>
           <span className="site-head__claim hero-anim hero-anim--2">
-            five systems · one order · one ledger
+            how five systems run one order together
           </span>
           <button
             ref={burgerRef}
@@ -157,7 +157,7 @@ export function SiteHead() {
               tabIndex={open ? 0 : -1}
               onClick={() => setOpen(false)}
             >
-              The repo ↗
+              github ↗
             </a>
           </li>
         </ul>

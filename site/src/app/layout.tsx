@@ -28,13 +28,13 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Manifest · one order's day through five systems",
+  title: "Manifest: one order's day through five systems",
   description:
-    "Manifest runs one order through five material-handling systems and journals the whole day: the order, the seats, the walk, the plan, the verdicts, the ledger. Every figure comes from a real harness run you can replay yourself.",
+    "How five warehouse systems run one order together, from the line that decides to the ledger that closes clean.",
   openGraph: {
-    title: "Manifest · one order's day through five systems",
+    title: "Manifest: one order's day through five systems",
     description:
-      "One order walks five systems, from the lane it lands on to the verdicts the floor journals back. Every figure on the page comes from a real run.",
+      "How five warehouse systems run one order together, from the line that decides to the ledger that closes clean.",
     type: "website",
     images: [
       {
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Manifest · one order's day through five systems",
+    title: "Manifest: one order's day through five systems",
     description:
-      "One order walks five systems, from the lane it lands on to the verdicts the floor journals back.",
+      "How five warehouse systems run one order together, from the line that decides to the ledger that closes clean.",
     images: ["https://sukrutn.github.io/manifest/og.png"],
   },
 };

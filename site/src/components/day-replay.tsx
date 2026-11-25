@@ -51,8 +51,8 @@ export function DayReplay() {
       <div className="replay__bar">
         <p className="replay__hint">
           {done
-            ? "the journal above is the run - replay it any time"
-            : "the five lanes, as the run left them - replay the journal"}
+            ? "the whole day, lane by lane - replay it any time"
+            : "watch the order fill all five lanes"}
         </p>
         <button className="replay__run" onClick={run} disabled={running}>
           {running ? "running ..." : done ? "run the day again" : "run the day"}
@@ -62,7 +62,7 @@ export function DayReplay() {
       <div className="term" ref={termRef}>
         {count === 0 && !done ? (
           <p className="term__idle">
-            [five lanes empty · one run, eight rows, exit 0]
+            [five lanes waiting for one run]
           </p>
         ) : (
           <>

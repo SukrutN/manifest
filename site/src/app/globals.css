@@ -886,15 +886,15 @@ html.anim--start .hero-anim--5 {
   }
 }
 
-/* ── the day: rail, chapters, white data cards ──────────────── */
+/* ── the flow: rail and plain-language chapters ────────────── */
 
-.day__grid {
+.flow__grid {
   display: grid;
   grid-template-columns: minmax(180px, 260px) 1fr;
   gap: clamp(28px, 5vw, 72px);
 }
 
-.day__rail {
+.flow__rail {
   position: sticky;
   top: clamp(80px, 14vh, 120px);
   align-self: start;
@@ -903,7 +903,7 @@ html.anim--start .hero-anim--5 {
   gap: 14px;
 }
 
-.day__rail p {
+.flow__rail p {
   margin: 0;
   display: flex;
   align-items: center;
@@ -929,7 +929,7 @@ html.anim--start .hero-anim--5 {
   font-variant-numeric: tabular-nums;
 }
 
-.day__chapters {
+.flow__chapters {
   display: flex;
   flex-direction: column;
 }
@@ -939,7 +939,8 @@ html.anim--start .hero-anim--5 {
   padding-block: clamp(28px, 4.5vh, 44px);
 }
 
-.day__chapters > :last-child .chapter {
+.flow__chapters > :last-child .chapter,
+.chapter-wrap--last .chapter {
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
 
@@ -966,97 +967,11 @@ html.anim--start .hero-anim--5 {
 }
 
 .chapter__note {
-  margin: 0 0 18px;
+  margin: 0;
   opacity: 0.7;
   font-size: clamp(14px, 1vw, 16px);
   max-width: 62ch;
-}
-
-.data-card {
-  background: var(--bianco);
-  color: var(--carbon);
-  border-radius: var(--radius);
-  padding: clamp(20px, 3vw, 30px);
-}
-
-.data-card__subject {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 11.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(14, 14, 14, 0.55);
-  margin: 0 0 12px;
-  border-bottom: 1px solid rgba(14, 14, 14, 0.14);
-  padding-bottom: 10px;
-}
-
-.data-card pre {
-  margin: 0;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 12.5px;
-  line-height: 1.65;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: var(--carbon);
-}
-
-.verdicts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
-.verdict {
-  background: var(--bianco);
-  color: var(--carbon);
-  border-radius: var(--radius);
-  padding: clamp(18px, 2.5vw, 26px);
-}
-
-.verdict__id {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 12px;
-  margin: 0 0 10px;
-  color: rgba(14, 14, 14, 0.75);
-}
-
-.chip {
-  display: inline-block;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 5px 12px;
-  border-radius: 100px;
-}
-
-.chip--veto {
-  background: var(--carbon);
-  color: var(--bianco);
-}
-
-.chip--ok {
-  border: 1px solid var(--carbon);
-  color: var(--carbon);
-}
-
-.verdict__line {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 11.5px;
-  color: rgba(14, 14, 14, 0.7);
-  margin: 12px 0 0;
-  line-height: 1.7;
-}
-
-.closing-line {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 12.5px;
-  letter-spacing: 0.04em;
-  color: var(--carbon);
-  background: var(--bianco);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  margin: 0;
+  line-height: 1.55;
 }
 
 /* ── replay: the graphite terminal ──────────────────────────── */
@@ -1422,11 +1337,11 @@ html.cursor-live * {
 /* ── responsive grids ───────────────────────────────────────── */
 
 @media (max-width: 980px) {
-  .day__grid {
+  .flow__grid {
     grid-template-columns: 1fr;
   }
 
-  .day__rail {
+  .flow__rail {
     position: static;
     flex-direction: row;
     flex-wrap: wrap;
@@ -1440,10 +1355,6 @@ html.cursor-live * {
 }
 
 @media (max-width: 640px) {
-  .verdicts {
-    grid-template-columns: 1fr;
-  }
-
   .wrap--half {
     width: calc(100% - 30px);
   }

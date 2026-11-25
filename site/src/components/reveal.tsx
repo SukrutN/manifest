@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { registerScrub } from "@/lib/scrub";
 
 /**
- * Position-driven reveals, never one-shot observers: an element reveals
- * when its top passes the viewport bottom, however fast it got there.
- * A flick, a Page-down, or an anchor jump all count, because the check
- * reads the element's own position on every scroll frame - an element
- * that skipped past the viewport without ever intersecting it still
- * reveals. Under reduced motion everything renders settled.
+ * Position-driven reveals, never timed and never one-shot: the
+ * driver writes only opacity and transform, scrubbed to the scroll
+ * position, settling about 62 percent of the way up the viewport
+ * and reversing on the way back. An element a flick skips past still
+ * settles, because the check reads positions every frame. Under
+ * reduced motion, and without JavaScript, everything renders settled.
  */
 export function Reveal({
   children,
@@ -20,43 +21,15 @@ export function Reveal({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  const done = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const id = window.setTimeout(() => setInView(true), 0);
-      return () => window.clearTimeout(id);
-    }
-    let raf = 0;
-    const check = () => {
-      raf = 0;
-      if (done.current) return;
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        done.current = true;
-        setInView(true);
-      }
-    };
-    const onScroll = () => {
-      if (raf === 0 && !done.current) raf = window.requestAnimationFrame(check);
-    };
-    raf = window.requestAnimationFrame(check);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf !== 0) window.cancelAnimationFrame(raf);
-    };
-  }, []);
+    return registerScrub(el, "rise", delay / 600);
+  }, [delay]);
 
   return (
-    <div
-      ref={ref}
-      className={`reveal${inView ? " is-in" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
+    <div ref={ref} className={`scrub-rise ${className}`}>
       {children}
     </div>
   );

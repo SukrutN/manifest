@@ -3,17 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * The counter: the day's figures count in while the page settles behind
- * the curtain, then the curtain lifts and the hero rises into view as
- * the page is uncovered. The overlay renders only once the client is
- * alive, so a visitor without JavaScript never meets a curtain at all;
- * under reduced motion the page never hides.
+ * The counter and the curtain: the word rises once, the day counts
+ * in, and the curtain splits to uncover the page, which hands its
+ * entrance to the hero. The overlay renders only once the client is
+ * alive, so a visitor without JavaScript never meets a curtain; one
+ * visit per session is enough; under reduced motion the page never
+ * hides and the hero never waits.
  */
 export function Preloader() {
   const [mounted, setMounted] = useState(false);
   const [pct, setPct] = useState(0);
-  const [lifting, setLifting] = useState(false);
-  const [gone, setGone] = useState(false);
+  const [phase, setPhase] = useState<"count" | "open" | "gone">("count");
   const raf = useRef(0);
 
   useEffect(() => {
@@ -23,41 +23,56 @@ export function Preloader() {
 
   useEffect(() => {
     if (!mounted) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const id = window.setTimeout(() => setGone(true), 0);
+    const revisit = window.sessionStorage.getItem("manifest-visited") === "1";
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      revisit
+    ) {
+      const id = window.setTimeout(() => setPhase("gone"), 0);
       return () => window.clearTimeout(id);
     }
     document.body.style.overflow = "hidden";
     const t0 = performance.now();
-    const DUR = 1400;
-    const tick = (t: number) => {
+    const DUR = 1500;
+    const finish = () => {
+      setPhase("open");
+      window.sessionStorage.setItem("manifest-visited", "1");
+      document.documentElement.classList.add("anim--start");
+      window.setTimeout(() => {
+        setPhase("gone");
+        document.body.style.overflow = "";
+      }, 950);
+    };
+    const step = (t: number) => {
       const p = Math.min(1, (t - t0) / DUR);
       setPct(Math.round(p * 100));
       if (p < 1) {
-        raf.current = requestAnimationFrame(tick);
+        raf.current = window.requestAnimationFrame(step);
       } else {
-        setLifting(true);
-        window.setTimeout(() => {
-          setGone(true);
-          document.body.style.overflow = "";
-        }, 1000);
+        finish();
       }
     };
-    raf.current = requestAnimationFrame(tick);
+    raf.current = window.requestAnimationFrame(step);
     return () => {
-      cancelAnimationFrame(raf.current);
+      window.cancelAnimationFrame(raf.current);
       document.body.style.overflow = "";
     };
   }, [mounted]);
 
-  if (!mounted || gone) return null;
+  if (!mounted || phase === "gone") return null;
 
   return (
-    <div className={`preloader${lifting ? " preloader--lift" : ""}`} aria-hidden="true">
-      <p className="preloader__label">MANIFEST · ONE ORDER&apos;S DAY</p>
-      <p className="preloader__count">{pct}</p>
-      <div className="preloader__bar">
-        <span style={{ width: `${pct}%` }} />
+    <div
+      className={`preloader${phase === "open" ? " preloader--open" : ""}`}
+      aria-hidden="true"
+    >
+      <div className="preloader__half preloader__half--l" />
+      <div className="preloader__half preloader__half--r" />
+      <div className="preloader__core">
+        <p className="preloader__word">
+          <span>MANIFEST</span>
+        </p>
+        <p className="preloader__pct">{pct}%</p>
       </div>
     </div>
   );

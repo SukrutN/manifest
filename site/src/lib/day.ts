@@ -21,7 +21,7 @@ export const SYSTEMS: SystemRow[] = [
     index: "01",
     name: "fluxline",
     layer: "the line",
-    line: "An IEC 61131-3 sortation program, its digital twin, and the supervisory host that can only request.",
+    line: "A sortation program written to IEC 61131-3, the industrial-control standard, with its digital twin and a supervisory host that can only request.",
     repo: "https://github.com/SukrutN/fluxline",
     demo: "https://sukrutn.github.io/fluxline/",
   },
@@ -29,7 +29,7 @@ export const SYSTEMS: SystemRow[] = [
     index: "02",
     name: "switchyard",
     layer: "integration",
-    line: "A Go message broker: durable journaled lanes, KV state, and a wire protocol that never moves a number.",
+    line: "A Go message broker: durable journaled lanes, key-value state, and a wire protocol that never moves a number.",
     repo: "https://github.com/SukrutN/switchyard",
     demo: "https://sukrutn.github.io/switchyard/",
   },
@@ -45,7 +45,7 @@ export const SYSTEMS: SystemRow[] = [
     index: "04",
     name: "northspan",
     layer: "picking & labor",
-    line: "The picker's route and the standard that prices it, against the sweep and in minutes.",
+    line: "The picker's route, and the labor standard that prices it against the sweep, in minutes.",
     repo: "https://github.com/SukrutN/northspan",
     demo: "https://sukrutn.github.io/northspan/",
   },
@@ -53,7 +53,7 @@ export const SYSTEMS: SystemRow[] = [
     index: "05",
     name: "hearthlane",
     layer: "fleet",
-    line: "CBS and ICBS over a painted floor: joint plans, deadlines, congestion, a release gate.",
+    line: "Conflict-based search and its improved variant over a painted floor: joint plans, deadlines, congestion, a release gate.",
     repo: "https://github.com/SukrutN/hearthlane",
     demo: "https://sukrutn.github.io/hearthlane/",
   },
@@ -63,7 +63,7 @@ export const SEAMS = [
   {
     n: "01",
     title: "The host can only request.",
-    body: "fluxline's host command block carries release requests to the line's Modbus surface, and the routing law keeps the last word: a tall piece asked for L02 rides to L03 anyway. The floor decides; everything above it proposes.",
+    body: "fluxline's host command block carries release requests to the line's Modbus surface, and the routing law keeps the last word: a tall piece asked for lane 2 rides to lane 3 anyway. The floor decides; everything above it proposes.",
     proof: "https://github.com/SukrutN/fluxline",
   },
   {
@@ -202,10 +202,34 @@ export const LANE_ROWS: LaneRow[] = [
 ];
 
 export const CHAPTERS = [
-  { n: "01", title: "The order lands", note: "293 bytes on the journal - a lane acks only what is on disk." },
-  { n: "02", title: "Cartons get seated", note: "The engine's reading: 30,496 bytes. The lane carries the digest." },
-  { n: "03", title: "The walk gets priced", note: "110.0 m planned against the 150.8 m sweep - shorter by 40.8 m." },
-  { n: "04", title: "The fleet gets planned", note: "ICBS: sum 69, gap 0 - no cheaper plan exists." },
-  { n: "05", title: "The line answers", note: "One veto, one honor - journaled before the lane ack." },
-  { n: "06", title: "The ledger closes", note: "Five lanes, eight rows, exit 0." },
+  {
+    n: "01",
+    title: "The order lands",
+    note: "The order lands as 293 bytes on the journal, and a lane acknowledges only what is already on disk, so the order survives a crash.",
+  },
+  {
+    n: "02",
+    title: "Cartons get seated",
+    note: "Both cartons get seats in one deterministic pass: velocity, affinity, and a random baseline, scored from 30,496 bytes of floor data.",
+  },
+  {
+    n: "03",
+    title: "The walk gets priced",
+    note: "The planned walk is 110.0 m against the 150.8 m a full sweep would cost: 40.8 m shorter, about a quarter less walking for the picker.",
+  },
+  {
+    n: "04",
+    title: "The fleet gets planned",
+    note: "69 ticks of travel across the fleet, and nothing cheaper exists, proven in 23 search steps.",
+  },
+  {
+    n: "05",
+    title: "The line answers",
+    note: "One carton is vetoed and one honored, each receipt journaled before the lane acknowledges, so a crash replays the verdict instead of losing it.",
+  },
+  {
+    n: "06",
+    title: "The ledger closes",
+    note: "The day closes across five lanes and eight rows; exit 0 means every claim was where it should be.",
+  },
 ];
